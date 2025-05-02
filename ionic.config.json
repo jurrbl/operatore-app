@@ -1,0 +1,7 @@
+{
+  "name": "operatore-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
