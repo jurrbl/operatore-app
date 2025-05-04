@@ -2,25 +2,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* CORE IONIC IMPORTS - Dopo Tailwind */
 @import "@ionic/angular/css/core.css";
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
-
-/* OPTIONAL IONIC UTILS */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
-
-/* DARK MODE (se necessario) */
 @import "@ionic/angular/css/palettes/dark.system.css";
-
-/* GOOGLE FONT */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* GLOBAL STYLES */
