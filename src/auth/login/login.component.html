@@ -1,0 +1,113 @@
+<main>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <div class="box">
+    <div class="inner-box">
+      <!-- SLIDER A DESTRA -->
+      <div class="carousel">
+        <div class="images-wrapper">
+          <img src="Perizie-1-scaled.jpg" class="image img-1 show" alt="Perizia 1" />
+          <img src="Perizie-2-scaled.jpg" class="image img-2" alt="Perizia 2" />
+          <img src="Perizie-3-scaled.jpg" class="image img-3" alt="Perizia 3" />
+        </div>
+        <div class="text-slider">
+          <div class="text-wrap">
+            <div class="text-group">
+              <h2>Effettua rilievi precisi</h2>
+              <h2>Personalizza i tuoi report</h2>
+              <h2>Condividi con il tuo team</h2>
+            </div>
+          </div>
+          <div class="bullets">
+            <span class="active" data-value="1"></span>
+            <span data-value="2"></span>
+            <span data-value="3"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM LOGIN/REGISTER -->
+      <div class="forms-wrap">
+        <!-- Login -->
+        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="sign-in-form">
+          <div class="logo">
+            <img src="https://angular.io/assets/images/logos/angular/angular.svg" />
+            <h4>Rilievi e Perizie</h4>
+          </div>
+
+          <div class="heading">
+            <h2>Benvenuto</h2>
+            <h6>Non sei registrato?</h6>
+            <button type="button" class="toggle" (click)="toggleForm($event)">Registrati</button>
+          </div>
+
+          <div class="actual-form">
+            <div class="input-wrap">
+              <input type="email" formControlName="email" required class="input-field" />
+              <label>Email</label>
+            </div>
+
+            <div class="input-wrap">
+              <input type="password" formControlName="password" required class="input-field" />
+              <label>Password</label>
+            </div>
+
+            <button type="submit" class="sign-btn" [disabled]="loginForm.invalid">Sign In</button>
+
+            <div class="google-login">
+              <a
+              class="google-btn"
+              href="https://backend-rilievi.onrender.com/api/auth/google?redirectUrl=http://localhost:8101/home"
+            >
+              <i class="fa-brands fa-google"></i> Sign in with Google
+            </a>
+            </div>
+
+            <p class="text">
+              Dimenticato password? <a [routerLink]="['/forgot-password']">Richiedine una nuova</a>
+            </p>
+          </div>
+        </form>
+
+        <!-- Registrazione -->
+        <form (ngSubmit)="onRegister()" [formGroup]="registerForm" class="sign-up-form">
+          <div class="logo">
+            <img src="https://angular.io/assets/images/logos/angular/angular.svg" />
+            <h4>Rilievi e Perizie</h4>
+          </div>
+
+          <div class="heading">
+            <h2>Inizia da oggi</h2>
+            <h6>Hai già un account?</h6>
+            <a href="#" class="toggle" (click)="toggleForm($event)">Accedi</a>
+          </div>
+
+          <div class="actual-form">
+            <div class="input-wrap">
+              <input type="text" formControlName="username" required class="input-field" />
+              <label>Nome</label>
+            </div>
+
+            <div class="input-wrap">
+              <input type="email" formControlName="email" required class="input-field" />
+              <label>Email</label>
+            </div>
+
+            <div class="input-wrap">
+              <input type="password" formControlName="password" required class="input-field" />
+              <label>Password</label>
+            </div>
+
+            <!-- foto profilo -->
+            <div class="input-wrap">
+              <input type="text" formControlName="profilePicture" required class="input-field" />
+              <label>Foto profilo (URL)</label>
+            </div>
+            <button type="submit" class="sign-btn" [disabled]="registerForm.invalid">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

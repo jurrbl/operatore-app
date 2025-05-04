@@ -1,0 +1,35 @@
+span{
+  cursor: pointer;
+  background-color: transparent;
+}
+.font-semibold{
+  cursor: pointer;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1)) !important;
+}
+.sidebar nav::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar ::-webkit-inner-spin-button,
+.sidebar ::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sidebar input[type=number],
+.sidebar select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.logout-icon svg {
+  transition: all 0.2s ease;
+}
+.logout-icon svg {
+  transition: all 0.2s ease;
+}
+.logout-icon:hover svg {
+  color: red;
+  opacity: 1;
+}

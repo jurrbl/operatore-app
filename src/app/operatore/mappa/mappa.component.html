@@ -1,0 +1,64 @@
+<div class="wrapper">
+  <!-- MAPPA + SIDEBAR -->
+  <div class="top-section">
+    <div class="mappa-wrapper">
+      <div class="toolbar">
+        <h2>Le Mie Perizie sulla Mappa</h2>
+      </div>
+      <div #mapContainer id="mapContainer"></div>
+    </div>
+
+    <div class="sidebar">
+      <h3>Le Tue Perizie</h3>
+      <div class="filters">
+        <button class="filter-btn" (click)="filtraPerizie('tutte')">Tutte</button>
+        <button class="filter-btn completata" (click)="filtraPerizie('completata')">Completate</button>
+        <button class="filter-btn in-attesa" (click)="filtraPerizie('in_corso')">In Attesa</button>
+        <button class="filter-btn annullata" (click)="filtraPerizie('annullata')">Annullate</button>
+      </div>
+
+      <div class="perizie-list">
+        <div class="perizia-card" *ngFor="let perizia of perizieFiltrate">
+          <div class="perizia-code">{{ perizia.codicePerizia }}</div>
+          <div class="perizia-data">{{ perizia.dataOra | date:'short' }}</div>
+          <div class="perizia-desc">{{ perizia.descrizione }}</div>
+          <a class="perizia-link" (click)="vaiAlDettaglio(perizia)">Dettaglio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETTAGLIO -->
+  <div id="dettaglio" class="dettaglio-box" *ngIf="periziaSelezionata">
+    <h3>Dettaglio Perizia</h3>
+    <p><strong>Codice:</strong> {{ periziaSelezionata.codicePerizia }}</p>
+    <p><strong>Data:</strong> {{ periziaSelezionata.dataOra | date:'full' }}</p>
+    <p><strong>Descrizione:</strong> {{ periziaSelezionata.descrizione }}</p>
+    <p><strong>Coordinate:</strong> {{ periziaSelezionata.coordinate?.latitudine }}, {{ periziaSelezionata.coordinate?.longitudine }}</p>
+  
+    <!-- 🔵 Revisione Admin -->
+    <div *ngIf="periziaSelezionata.revisioneAdmin" class="mt-4">
+      <p class="text-white">
+        <strong>Revisionata da:</strong> {{ periziaSelezionata.revisioneAdmin.username }}
+      </p>
+    </div>
+  
+    <div *ngIf="periziaSelezionata.revisioneAdmin.commento" class="mt-2">
+      <p class="text-gray-400">
+        <strong>Commento di Revisione:</strong> 
+      </p>
+      <p class="text-white bg-gray-800 p-3 rounded mt-1">
+        {{ periziaSelezionata.revisioneAdmin.commento }}
+      </p>
+    </div>
+  
+    <!-- 📷 Foto -->
+    <div class="foto-wrapper mt-6" *ngIf="periziaSelezionata.fotografie?.length">
+      <div class="foto-item" *ngFor="let foto of periziaSelezionata.fotografie">
+        <img [src]="foto.url" alt="Foto" (error)="hideImage($event)" />
+        <p class="commento">{{ foto.commento }}</p>
+      </div>
+    </div>
+  </div>
+  
+</div>

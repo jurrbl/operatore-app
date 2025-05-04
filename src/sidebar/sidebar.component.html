@@ -1,0 +1,191 @@
+<!-- Bottone Hamburger (solo mobile, visibile solo se sidebar è chiusa) -->
+<button
+  *ngIf="!mobileOpen"
+  class="fixed top-4 left-4 z-50 text-white bg-zinc-800 p-2 rounded md:hidden"
+  (click)="toggleMobileSidebar()"
+>
+  &#9776;
+</button>
+
+<!-- Sidebar Mobile -->
+<div
+  class="fixed inset-0 z-40 bg-zinc-900 text-white flex flex-col justify-between transition-transform duration-300 md:hidden"
+  [ngClass]="{
+    'translate-x-0': mobileOpen,
+    '-translate-x-full': !mobileOpen
+  }"
+>
+  <!-- Intestazione -->
+  <div class="flex items-center justify-between px-4 py-6 border-b border-zinc-800">
+    <div class="flex items-center gap-3">
+      <div class="bg-white w-6 h-6 rounded shrink-0"></div>
+      <span class="text-lg font-semibold">Rilievi e Perizie</span>
+    </div>
+    <button (click)="closeSidebar()" class="text-xl font-bold">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Navigazione -->
+  <nav class="flex flex-col gap-2 px-4 py-6">
+    <!-- OPERATORE -->
+    <ng-container *ngIf="role === 'user'">
+      <a routerLink="dashboard" (click)="closeSidebar()" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-6h6v6h-6V9zm0 12h6v-6h-6v6z" />
+        </svg>
+        <span class="text-sm font-medium ml-2">Dashboard</span>
+      </a>
+      <a routerLink="mappa" (click)="closeSidebar()" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.382V5.618a2 2 0 011.553-1.894L9 1m6 0l5.447 2.724A2 2 0 0121 5.618v9.764a2 2 0 01-1.553 1.894L15 20M9 1v19m6-19v19" />
+        </svg>
+        <span class="text-sm font-medium ml-2">Mappa</span>
+      </a>
+      <a routerLink="perizie" (click)="closeSidebar()" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7a2 2 0 012-2h14a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3v4M8 3v4m4-4v4" />
+        </svg>
+        <span class="text-sm font-medium ml-2">Perizie</span>
+      </a>
+    </ng-container>
+
+    <!-- ADMIN -->
+    <ng-container *ngIf="role === 'admin'">
+      <a routerLink="dashboard-admin" (click)="closeSidebar()" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-6h6v6h-6V9zm0 12h6v-6h-6v6z" />
+        </svg>
+        <span class="text-sm font-medium ml-2">Dashboard Admin</span>
+      </a>
+      <a routerLink="mappa-utenti" (click)="closeSidebar()" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.382V5.618a2 2 0 011.553-1.894L9 1m6 0l5.447 2.724A2 2 0 0121 5.618v9.764a2 2 0 01-1.553 1.894L15 20M9 1v19m6-19v19" />
+        </svg>
+        <span class="text-sm font-medium ml-2">Mappa Utenti</span>
+      </a>
+      
+    </ng-container>
+  </nav>
+
+  <!-- Profilo Mobile -->
+  <div class="flex items-center gap-3 px-4 py-6 border-t border-zinc-800">
+    <img
+      [src]="profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'"
+      alt="Utente"
+      class="w-10 h-10 rounded-full shrink-0"
+    />
+    <div class="text-sm flex flex-col">
+      <p class="font-semibold">{{ username }}</p>
+      <button
+        (click)="logout()"
+        class="text-xs text-red-400 hover:text-red-500 mt-1 text-left"
+      >
+        Esci
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Desktop -->
+<div
+  class="sidebar hidden md:flex h-screen bg-zinc-900 text-white flex-col justify-between transition-all duration-300 overflow-hidden"
+  [ngClass]="{
+    'w-[300px]': open || !animate,
+    'w-[80px]': !open && animate
+  }"
+  (mouseenter)="setOpen(true)"
+  (mouseleave)="setOpen(false)"
+>
+  <!-- Logo -->
+  <div class="flex items-center gap-3 px-4 py-6">
+    <div class="bg-white w-6 h-6 rounded shrink-0"></div>
+    <span
+      class="text-xl font-semibold transition-all duration-300 whitespace-nowrap overflow-hidden"
+      [class.opacity-0]="!open && animate"
+      [class.w-0]="!open && animate"
+      [class.ml-0]="!open && animate"
+      [class.ml-2]="open || !animate"
+    >
+      Rilievi e Perizie
+    </span>
+  </div>
+
+  <!-- Navigazione -->
+  <nav class="flex flex-col gap-2 px-2">
+    <!-- OPERATORE -->
+    <ng-container *ngIf="role === 'user'">
+      <a routerLink="dashboard" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-6h6v6h-6V9zm0 12h6v-6h-6v6z" />
+        </svg>
+        <span class="text-sm font-medium transition-all duration-300 whitespace-nowrap overflow-hidden" [class.opacity-0]="!open && animate" [class.w-0]="!open && animate" [class.ml-0]="!open && animate" [class.ml-2]="open || !animate">
+          Dashboard
+        </span>
+      </a>
+      <a routerLink="mappa" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.382V5.618a2 2 0 011.553-1.894L9 1m6 0l5.447 2.724A2 2 0 0121 5.618v9.764a2 2 0 01-1.553 1.894L15 20M9 1v19m6-19v19" />
+        </svg>
+        <span class="text-sm font-medium transition-all duration-300 whitespace-nowrap overflow-hidden" [class.opacity-0]="!open && animate" [class.w-0]="!open && animate" [class.ml-0]="!open && animate" [class.ml-2]="open || !animate">
+          Mappa
+        </span>
+      </a>
+      <a routerLink="perizie" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7a2 2 0 012-2h14a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3v4M8 3v4m4-4v4" />
+        </svg>
+        <span class="text-sm font-medium transition-all duration-300 whitespace-nowrap overflow-hidden" [class.opacity-0]="!open && animate" [class.w-0]="!open && animate" [class.ml-0]="!open && animate" [class.ml-2]="open || !animate">
+          Perizie
+        </span>
+      </a>
+    </ng-container>
+
+    <!-- ADMIN -->
+    <ng-container *ngIf="role === 'admin'">
+      <a routerLink="dashboard-admin" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-6h6v6h-6V9zm0 12h6v-6h-6v6z" />
+        </svg>
+        <span class="text-sm font-medium transition-all duration-300 whitespace-nowrap overflow-hidden" [class.opacity-0]="!open && animate" [class.w-0]="!open && animate" [class.ml-0]="!open && animate" [class.ml-2]="open || !animate">
+          Dashboard Admin
+        </span>
+      </a>
+      <a routerLink="mappa-utenti" class="flex items-center h-10 px-4 py-2 hover:bg-zinc-800 rounded-md transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.382V5.618a2 2 0 011.553-1.894L9 1m6 0l5.447 2.724A2 2 0 0121 5.618v9.764a2 2 0 01-1.553 1.894L15 20M9 1v19m6-19v19" />
+        </svg>
+        <span class="text-sm font-medium transition-all duration-300 whitespace-nowrap overflow-hidden" [class.opacity-0]="!open && animate" [class.w-0]="!open && animate" [class.ml-0]="!open && animate" [class.ml-2]="open || !animate">
+          Mappa Utenti
+        </span>
+      </a>
+    </ng-container>
+  </nav>
+
+  <div class="flex items-center gap-3 px-4 py-6">
+    <img
+      [src]="profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'"
+      alt="Utente"
+      class="w-10 h-10 rounded-full shrink-0"
+    />
+    <div
+      class="text-sm transition-all duration-300 whitespace-nowrap overflow-hidden flex flex-col"
+      [class.opacity-0]="!open && animate"
+      [class.w-0]="!open && animate"
+      [class.ml-0]="!open && animate"
+      [class.ml-2]="open || !animate"
+    >
+      <p class="font-semibold">{{ username }}</p>
+      <button
+        (click)="logout()"
+        class="text-xs text-red-400 hover:text-red-500 mt-1 text-left"
+      >
+        Esci
+      </button>
+    </div>
+  </div>
+</div>

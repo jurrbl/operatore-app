@@ -1,0 +1,18 @@
+<div class="flex h-screen bg-white dark:bg-zinc-950 text-white overflow-hidden">
+  <!-- Sidebar fissa -->
+
+  <h1 class="text-4xl text-green-600 font-bold">Tailwind funziona!</h1>
+  
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenuto scrollabile -->
+  <div
+    class="flex-1 overflow-y-auto transition-all duration-300 p-6"
+    [ngClass]="{
+      'ml-[0]': sidebarOpen || !animate,
+      'ml-[80px]': !sidebarOpen && animate
+    }"
+  >
+    <router-outlet />
+  </div>
+</div>
