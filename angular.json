@@ -30,10 +30,11 @@
                 "output": "assets"
               }
             ],
-           "styles": [
-  "src/styles.css",
-  "src/theme/variables.scss"
-],
+            "styles": [
+              "src/tailwind.css",
+              "src/global.scss",
+              "src/theme/variables.scss"
+            ],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -107,10 +108,7 @@
                 "output": "assets"
               }
             ],
-          "styles": [
-  "src/styles.css",
-  "src/theme/variables.scss"
-],
+            "styles": ["src/styles.css", "src/theme/variables.scss"],
             "scripts": []
           },
           "configurations": {
@@ -130,7 +128,8 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": ["@ionic/angular-toolkit"],
+    "analytics": false
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
