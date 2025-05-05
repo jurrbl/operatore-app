@@ -119,6 +119,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
       bounds.extend(lngLat);
       markerCount++;
 
+   
       const markerEl = document.createElement('div');
       markerEl.style.width = '40px';  // un po' più grande per equilibrio visivo
       markerEl.style.height = '40px';
@@ -127,8 +128,9 @@ export class MappaComponent implements OnInit, AfterViewInit {
 
       markerEl.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
       markerEl.style.border = '2px solid white';
-      markerEl.style.cursor = 'pointer';
+      markerEl.style.cursor = 'pointer';  
 
+    
       const img = document.createElement('img');
       img.src = this.userImage || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       img.alt = 'Foto';
@@ -141,8 +143,6 @@ export class MappaComponent implements OnInit, AfterViewInit {
         img.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       };
       markerEl.appendChild(img);
-
-
       const popupContent = `
         <div class="maplibregl-popup-content">
           <div class="popup-wrapper" style="background-color: #111; padding: 16px; color: white; border-radius: 8px; max-width: 280px; font-family: 'Poppins', sans-serif;">

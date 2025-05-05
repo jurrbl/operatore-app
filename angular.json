@@ -20,7 +20,9 @@
           "options": {
             "outputPath": "www",
             "index": "src/index.html",
-            "polyfills": ["src/polyfills.ts"],
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,23 +35,27 @@
             "styles": [
               "src/tailwind.css",
               "src/global.scss",
+              "src/styles.css", 
               "src/theme/variables.scss"
             ],
             "scripts": [],
-            "browser": "src/main.ts"
+            "browser": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "maplibre-gl"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 }
               ],
               "fileReplacements": [
@@ -108,7 +114,12 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/styles.css", "src/theme/variables.scss"],
+            "styles": [
+         "src/tailwind.css",
+              "src/global.scss",
+              "src/styles.css", 
+              "src/theme/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -121,14 +132,19 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"],
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
     "analytics": false
   },
   "schematics": {

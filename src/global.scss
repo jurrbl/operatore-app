@@ -1,0 +1,43 @@
+
+
+/* ───– 2) Direttive Tailwind –─── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───– 3) Regole globali –─── */
+body {
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Fix overflow input numerici */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Popup MapLibre */
+.maplibregl-popup-content {
+  background: none !important;
+}
+
+/* Nascondi scrollbar in sidebar */
+.sidebar {
+  overflow-y: auto;
+}
+.sidebar ::-webkit-scrollbar,
+.sidebar ::-webkit-scrollbar-button {
+  display: none !important;
+  appearance: none !important;
+}
+
+/* Forza no overflow orizzontale globale */
+* {
+  overflow-x: hidden;
+}

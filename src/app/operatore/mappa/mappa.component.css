@@ -246,10 +246,29 @@ body {
 }
 
 
+.mappa-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;      /* o l’altezza che vuoi tu */
+  min-height: 0;     /* permette al flex-child di non fuoriuscire */
+}
+
+#mapContainer {
+  flex: 1;
+  height: 100%;      /* ora ha un vero height di riferimento */
+  min-height: 0;     /* importantissimo per flexbox */
+}
+
+.maplibregl-marker {
+  position: absolute;       /* riaffermalo se venisse sovrascritto */
+  will-change: transform;   /* aiuta il browser a ottimizzare */
+}
 
 
-
-
+#mapContainer {
+  overscroll-behavior: contain !important;      /* blocca lo scroll del genitore */
+  overscroll-behavior-y: contain !important;    /* in particolare in verticale */
+}
 
 
 
