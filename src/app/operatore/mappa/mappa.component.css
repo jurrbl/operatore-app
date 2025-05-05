@@ -18,6 +18,7 @@ body {
   gap: 20px;
   height: 80vh;
   flex-wrap: nowrap;
+  position: relative; /* ✅ Serve per il contesto dei popup */
 }
 
 /* MAPPA */
@@ -29,6 +30,8 @@ body {
   padding: 10px;
   display: flex;
   flex-direction: column;
+  overflow: visible !important; /* ✅ Permette al popup di uscire */
+  height: 100%;
 }
 
 .toolbar h2 {
@@ -38,9 +41,42 @@ body {
 }
 
 #mapContainer {
+  width: 100% !important;
+  height: 100%;
+  min-height: 400px;
+  position: relative !important;
+  overflow: visible !important; /* ✅ Cruciale per popup */
+}
+
+/* Fix per canvas di MapLibre */
+.maplibregl-canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.maplibregl-popup {
+  z-index: 9999; /* ✅ Popup sempre sopra */
+}
+
+/* MARKER */
+.marker {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  border: 2px solid white;
+  cursor: pointer;
+  overflow: hidden !important;
+}
+.marker img {
   width: 100%;
-  flex-grow: 1;
-  border-radius: 6px;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  border-radius: 50%;
+  z-index: 1;
 }
 
 /* SIDEBAR */
@@ -128,21 +164,31 @@ body {
 
 .foto-wrapper {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 1rem;
 }
-.foto-wrapper img {
-  height: 100px;
+.foto-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px;
+}
+.foto-item img {
+  width: 100%;
+  height: auto;
   border-radius: 6px;
-  border: 1px solid #3f3f46;
   object-fit: cover;
-  background-color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.commento {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+  text-align: center;
 }
 
-
-
-
+/* POPUP */
 .maplibregl-popup-content {
   width: 100%;
   max-width: 150px;
@@ -157,27 +203,25 @@ body {
   overflow: hidden;
 }
 
+/* Carosello popup se presente */
 .popup-wrapper {
   display: flex;
   gap: 20px;
   flex-direction: row;
   align-items: flex-start;
 }
-
 .popup-details {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .popup-details .icon {
   width: 16px;
   height: 16px;
   margin-right: 6px;
   vertical-align: middle;
 }
-
 .popup-images {
   width: 300px;
   height: 220px;
@@ -186,7 +230,6 @@ body {
   border: 1px solid #3f3f46;
   border-radius: 8px;
 }
-
 .popup-images img {
   width: 20%;
   height: 20%;
@@ -196,12 +239,10 @@ body {
   top: 0;
   left: 0;
 }
-
 .popup-images img:not(.active) {
   opacity: 0;
   pointer-events: none;
 }
-
 .popup-btn {
   margin-top: 10px;
   padding: 6px 12px;
@@ -213,62 +254,6 @@ body {
   cursor: pointer;
 }
 
-
-
-
-.foto-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 1rem;
-}
-
-.foto-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 200px;
-}
-
-.foto-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.commento {
-  font-size: 0.85rem;
-  color: #ccc;
-  margin-top: 0.3rem;
-  text-align: center;
-}
-
-
-.mappa-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 80vh;      /* o l’altezza che vuoi tu */
-  min-height: 0;     /* permette al flex-child di non fuoriuscire */
-}
-
-#mapContainer {
-  flex: 1;
-  height: 100%;      /* ora ha un vero height di riferimento */
-  min-height: 0;     /* importantissimo per flexbox */
-}
-
-.maplibregl-marker {
-  position: absolute;       /* riaffermalo se venisse sovrascritto */
-  will-change: transform;   /* aiuta il browser a ottimizzare */
-}
-
-
-#mapContainer {
-  overscroll-behavior: contain !important;      /* blocca lo scroll del genitore */
-  overscroll-behavior-y: contain !important;    /* in particolare in verticale */
-}
 
 
 

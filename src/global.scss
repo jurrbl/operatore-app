@@ -1,18 +1,21 @@
+/* IMPORT FONT GOOGLE */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tektur:wght@400..900&display=swap');
 
-
-/* ───– 2) Direttive Tailwind –─── */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ───– 3) Regole globali –─── */
+/* ✅ Applica font globalmente solo al body */
 body {
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
   max-width: 100vw;
 }
 
-/* Fix overflow input numerici */
+
+/* ✅ NON toccare * (asterisco) globalmente */
+ /* ❌ rimosso: * { overflow-x: hidden; } */
+
+/* ✅ NON sovrascrivere .transition-all di Tailwind */
+ /* ❌ rimosso: .transition-all { background-color: black; } */
+
+/* ✅ Fix overflow in input numerici */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -22,22 +25,33 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* Popup MapLibre */
-.maplibregl-popup-content {
+.maplibregl-popup-content{
   background: none !important;
 }
 
-/* Nascondi scrollbar in sidebar */
-.sidebar {
-  overflow-y: auto;
-}
+/* ✅ Sidebar: nascondi scrollbar e frecce visive */
 .sidebar ::-webkit-scrollbar,
-.sidebar ::-webkit-scrollbar-button {
+.sidebar ::-webkit-scrollbar-button,
+.sidebar select,
+.sidebar input[type=number] {
   display: none !important;
   appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
 }
 
-/* Forza no overflow orizzontale globale */
-* {
-  overflow-x: hidden;
+/* ✅ Fix pseudo-elementi inutili */
+.sidebar ::before,
+.sidebar ::after {
+  display: none !important;
+  content: none !important;
 }
+
+*{
+  overflow-x: hidden !important;
+}
+
+/* ✅ TAILWIND */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
