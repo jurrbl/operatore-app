@@ -14,10 +14,9 @@ import { NgIf } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule, NgFor, NgIf],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   name: string = '';
   role: string = '';
   username: string = '';
@@ -31,14 +30,14 @@ export class DashboardComponent implements OnInit {
   filtroStato: string = 'tutte';
 
   cronologiaPerizie: Array<{
-    dataOra: Date,
-    stato: string,
-    dataRevisione?: Date,
+    dataOra: Date;
+    stato: string;
+    dataRevisione?: Date;
     revisioneAdmin?: {
-      id: string,
-      username: string,
-      profilePicture?: string
-    }
+      id: string;
+      username: string;
+      profilePicture?: string;
+    };
   }> = [];
 
   constructor(
@@ -57,11 +56,13 @@ export class DashboardComponent implements OnInit {
 
   private handleTokenFromUrl(): void {
     this.token = this.route.snapshot.queryParamMap.get('token');
-
+    console.log('Token from URL:', this.token);
     if (this.token) {
       localStorage.setItem('token', this.token);
       const cleanUrl = this.route.snapshot.pathFromRoot
-        .map(route => route.url.map(segment => segment.toString()).join('/'))
+        .map((route) =>
+          route.url.map((segment) => segment.toString()).join('/')
+        )
         .join('/');
       this.location.replaceState(cleanUrl);
     }
@@ -69,17 +70,22 @@ export class DashboardComponent implements OnInit {
 
   private populateUserData(): void {
     const user = this.authService.getUser();
-
+    console.log('User from AuthService:', user);
     if (user) {
       this.username = user.username || 'Utente';
       this.email = user.email || '–';
       this.phone = user.phone || '–';
-      this.profilePicture = user.profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      this.profilePicture =
+        user.profilePicture ||
+        'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       this.role = user.role || 'Utente';
       this.countPerizie = this.authService.getPerizie()?.length || 0;
 
       this.lastSeen = user.lastSeen
-        ? formatDistanceToNow(new Date(user.lastSeen), { addSuffix: true, locale: it })
+        ? formatDistanceToNow(new Date(user.lastSeen), {
+            addSuffix: true,
+            locale: it,
+          })
         : 'Mai';
     } else {
       this.router.navigate(['/login']);
@@ -89,47 +95,50 @@ export class DashboardComponent implements OnInit {
   private populateCronologiaPerizie(): void {
     const currentUser = this.authService.getUser();
     const tutteLePerizie = this.authService.getPerizie() || [];
-  
+
     console.log('✅ Tutte le perizie:', tutteLePerizie);
     console.log('✅ Current User ID:', currentUser?._id);
-  
+
     if (!currentUser || tutteLePerizie.length === 0) {
       this.cronologiaPerizie = [];
       return;
     }
-  
+
     let perizieUtente = tutteLePerizie
-      .filter(p => {
-        const idOperatore = typeof p.codiceOperatore === 'string'
-          ? p.codiceOperatore
-          : (p.codiceOperatore as any)?._id?.toString();
-  
+      .filter((p) => {
+        const idOperatore =
+          typeof p.codiceOperatore === 'string'
+            ? p.codiceOperatore
+            : (p.codiceOperatore as any)?._id?.toString();
+
         return idOperatore === currentUser._id;
       })
-      .map(p => ({
+      .map((p) => ({
         dataOra: new Date(p.dataOra),
         stato: p.stato,
         dataRevisione: p.dataRevisione ? new Date(p.dataRevisione) : undefined,
-        revisioneAdmin: p.revisioneAdmin ? {
-          id: (p.revisioneAdmin as any).id,
-          username: (p.revisioneAdmin as any).username,
-          profilePicture: (p.revisioneAdmin as any).profilePicture || ''
-        } : undefined
+        revisioneAdmin: p.revisioneAdmin
+          ? {
+              id: (p.revisioneAdmin as any).id,
+              username: (p.revisioneAdmin as any).username,
+              profilePicture: (p.revisioneAdmin as any).profilePicture || '',
+            }
+          : undefined,
       }));
-  
+
     if (this.filtroStato !== 'tutte') {
-      perizieUtente = perizieUtente.filter(p => p.stato === this.filtroStato);
+      perizieUtente = perizieUtente.filter((p) => p.stato === this.filtroStato);
     }
-  
+
     this.cronologiaPerizie = perizieUtente.sort((a, b) => {
       return this.sortOrder === 'asc'
         ? a.dataOra.getTime() - b.dataOra.getTime()
         : b.dataOra.getTime() - a.dataOra.getTime();
     });
-  
+
     console.log('✅ Cronologia caricata:', this.cronologiaPerizie);
   }
-  
+
   cambiaOrdine() {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     this.populateCronologiaPerizie();
