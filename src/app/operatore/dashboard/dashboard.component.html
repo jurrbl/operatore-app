@@ -1,126 +1,132 @@
-<div class="p-6 text-white rounded-xl shadow-lg space-y-6" id="fullsize">
-  <!-- 👤 Dati Personali -->
-  <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-    <div class="flex items-center gap-4">
-      <img
-      [src]="profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'"
-      alt="User avatar"
-      class="w-20 h-20 rounded-full object-cover border-4 border-gray-700"
-    />
-      <h2 class="text-2xl font-bold text-white">{{ username }}</h2>
-    </div>
+<div
+	class="p-6 text-white rounded-xl shadow-lg space-y-6" id="fullsize">
+	<!-- 👤 Dati Personali -->
+	<div
+		class="flex flex-col md:flex-row justify-between items-center gap-6">
+		<!-- Avatar + Username -->
+		<div class="flex items-center gap-4">
+			<img [src]="profilePicture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'" alt="User avatar" class="w-20 h-20 rounded-full object-cover border-4 border-gray-700"/>
+			<h2 class="text-2xl font-bold text-white">{{ username }}</h2>
+		</div>
 
-    <div class="flex flex-col gap-2 text-sm text-gray-300">
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 5h2l3.6 7.59a1 1 0 00.82.41h8.38a1 1 0 00.82-.41L21 5h2M16 11v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2" />
-        </svg>
-        <span class="min-w-[90px] font-semibold">Telefono:</span>
-        <span>{{ phone }}</span>
-      </div>
+		<!-- Telefono & Email -->
+		<div
+			class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
+			<!-- Telefono -->
+			<div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h2l3.6 7.59a1 1 0
+					                 00.82.41h8.38a1 1 0
+					                 00.82-.41L21 5h2M16
+					                 11v2a2 2 0 01-2 2H6a2
+					                 2 0 01-2-2v-2"/>
+				</svg>
+				<span class="font-semibold flex-shrink-0">Telefono:</span>
+				<span class="break-words">{{ phone }}</span>
+			</div>
+			<!-- Email -->
+			<div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0
+					                 002.22 0L21 8M5 19h14a2
+					                 2 0 002-2V7a2 2 0
+					                 00-2-2H5a2 2 0 00-2
+					                 2v10a2 2 0 002 2z"/>
+				</svg>
+				<span class="font-semibold flex-shrink-0">Email:</span>
+				<span class="break-words">{{ email }}</span>
+			</div>
+		</div>
+	</div>
 
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-        <span class="min-w-[90px] font-semibold">Email:</span>
-        <span>{{ email }}</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- 🔢 Metrics -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
-    <div class="bg-gray-800 p-4 rounded-lg">
-      <div class="text-3xl font-bold">{{ countPerizie }}</div>
-      <div class="text-gray-400 text-sm">Perizie Totali</div>
-    </div>
-    <div class="bg-gray-800 p-4 rounded-lg">
-      <div class="text-3xl font-bold">{{ lastSeen }}</div>
-      <div class="text-gray-400 text-sm">Ultimo Accesso</div>
-    </div>
-    <div class="bg-gray-800 p-4 rounded-lg">
-      <div class="text-xl font-semibold">{{ role }}</div>
-      <div class="text-gray-400 text-sm">Ruolo Utente</div>
-    </div>
-    <div class="bg-gray-800 p-4 rounded-lg cursor-pointer" (click)="redirectToEmail(email)">
-      <div class="flex items-center justify-center gap-1 text-xl font-semibold">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M16 12H8m8 0l-4-4m4 4l-4 4m0 0H8m4 0h4" />
-        </svg>
-        Contatta
-      </div>
-      <div class="text-gray-400 text-sm">Invia una mail</div>
-      <p class="mt-2 text-sm">{{ email }}</p>
-    </div>
-  </div>
+	<!-- 🔢 Metrics -->
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
+		<div class="bg-gray-800 p-4 rounded-lg">
+			<div class="text-3xl font-bold">{{ countPerizie }}</div>
+			<div class="text-gray-400 text-sm">Perizie Totali</div>
+		</div>
+		<div class="bg-gray-800 p-4 rounded-lg">
+			<div class="text-3xl font-bold">{{ lastSeen }}</div>
+			<div class="text-gray-400 text-sm">Ultimo Accesso</div>
+		</div>
+		<div class="bg-gray-800 p-4 rounded-lg">
+			<div class="text-xl font-semibold">{{ role }}</div>
+			<div class="text-gray-400 text-sm">Ruolo Utente</div>
+		</div>
+		<div class="bg-gray-800 p-4 rounded-lg cursor-pointer" (click)="redirectToEmail(email)">
+			<div class="flex items-center justify-center gap-1 text-xl font-semibold">
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0l-4-4m4 4l-4 4m0 0H8m4 0h4"/>
+				</svg>
+				Contatta
+			</div>
+			<div class="text-gray-400 text-sm">Invia una mail</div>
+			<p class="mt-2 text-sm">{{ email }}</p>
+		</div>
+	</div>
 
-  <!-- 📅 Cronologia Perizie -->
-  <div class="mt-8">
-    <div class="flex items-center gap-2 mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M8 7V3m8 4V3m-9 8h10m-9 4h5m4 4H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2z" />
-      </svg>
-      <h3 class="text-xl font-semibold">Cronologia Perizie</h3>
-    </div>
+	<!-- 📅 Cronologia Perizie -->
+	<div class="mt-8">
+		<div class="flex items-center gap-2 mb-4">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-9 4h5m4 4H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2z"/>
+			</svg>
+			<h3 class="text-xl font-semibold">Cronologia Perizie</h3>
+		</div>
 
-    <!-- Filtri -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-      <div class="flex items-center gap-2">
-        <label class="text-sm font-semibold">Stato:</label>
-        <select [(ngModel)]="filtroStato" (change)="filtraPerStato(filtroStato)"
-          class="bg-zinc-800 text-white px-2 py-1 rounded border border-zinc-700">
-          <option value="tutte">Tutte</option>
-          <option value="completata">Completate</option>
-          <option value="in_corso">In Corso</option>
-          <option value="annullata">Annullate</option>
-        </select>
-      </div>
+		<!-- Filtri -->
+		<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+			<div class="flex items-center gap-2">
+				<label class="text-sm font-semibold">Stato:</label>
+				<select [(ngModel)]="filtroStato" (change)="filtraPerStato(filtroStato)" class="bg-zinc-800 text-white px-2 py-1 rounded border border-zinc-700">
+					<option value="tutte">Tutte</option>
+					<option value="completata">Completate</option>
+					<option value="in_corso">In Corso</option>
+					<option value="annullata">Annullate</option>
+				</select>
+			</div>
 
-      <button (click)="cambiaOrdine()"
-        class="bg-zinc-700 text-white px-3 py-1 rounded hover:bg-zinc-600 transition text-sm">
-        Ordina: {{ sortOrder === 'asc' ? 'dal più vecchio' : 'dal più recente' }}
-      </button>
-    </div>
+			<button (click)="cambiaOrdine()" class="bg-zinc-700 text-white px-3 py-1 rounded hover:bg-zinc-600 transition text-sm">
+				Ordina:
+				{{ sortOrder === 'asc' ? 'dal più vecchio' : 'dal più recente' }}
+			</button>
+		</div>
 
-    <!-- Lista Perizie -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div *ngFor="let perizia of cronologiaPerizie" class="bg-gray-800 p-4 rounded-lg">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm">{{ perizia.dataOra | date:'dd MMM yyyy' }}</span>
-          <span [ngClass]="{
-              'bg-green-500 text-black': perizia.stato === 'completata',
-              'bg-yellow-400 text-black': perizia.stato === 'in_corso',
-              'bg-red-500 text-white': perizia.stato === 'annullata'
-            }" class="text-xs px-2 py-1 rounded">
-            {{ perizia.stato | uppercase }}
-          </span>
-        </div>
+		<!-- Lista Perizie -->
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+			<div *ngFor="let perizia of cronologiaPerizie" class="bg-gray-800 p-4 rounded-lg">
+				<div class="flex justify-between items-center mb-2">
+					<span class="text-sm">{{ perizia.dataOra | date:'dd MMM yyyy' }}</span>
+					<span [ngClass]="{
+						              'bg-green-500 text-black': perizia.stato === 'completata',
+						              'bg-yellow-400 text-black': perizia.stato === 'in_corso',
+						              'bg-red-500 text-white': perizia.stato === 'annullata'
+						            }" class="text-xs px-2 py-1 rounded">
+						{{ perizia.stato | uppercase }}
+					</span>
+				</div>
 
-        <p class="text-sm text-gray-400">
-          Inserita:
-          <span class="text-white">{{ perizia.dataOra | date:'shortTime' }}</span>
-        </p>
+				<p class="text-sm text-gray-400">
+					Inserita:
+					<span class="text-white">{{ perizia.dataOra | date:'shortTime' }}</span>
+				</p>
 
-        <p *ngIf="perizia.revisioneAdmin" class="text-sm text-gray-400">
-          Revisionata da:
-          <span class="text-white font-semibold">
-            {{ perizia.revisioneAdmin.username }}
-          </span>
-        </p>
-        
-        <p *ngIf="perizia.dataRevisione" class="text-sm text-gray-400">
-          Alle ore:
-          <span class="text-white">
-            {{ perizia.dataRevisione | date:'shortTime' }}
-          </span>
-        </p>
+				<p *ngIf="perizia.revisioneAdmin" class="text-sm text-gray-400">
+					Revisionata da:
+					<span class="text-white font-semibold">
+						{{ perizia.revisioneAdmin.username }}
+					</span>
+				</p>
 
-      </div>
-    </div>
-  </div>
+				<p *ngIf="perizia.dataRevisione" class="text-sm text-gray-400">
+					Alle ore:
+					<span class="text-white">
+						{{ perizia.dataRevisione | date:'shortTime' }}
+					</span>
+				</p>
+
+			</div>
+		</div>
+	</div>
 </div>

@@ -6,3 +6,16 @@
 body{
   overflow-x :hidden;
 }
+
+
+/* da tablet in su: in riga affiancati */
+@media (min-width: 768px) {
+  .contact-info {
+    flex-direction: row;
+    align-items: center;
+  }
+  /* se vuoi un po’ di margine tra telefono e email */
+  .contact-info > div + div {
+    margin-left: 1rem;
+  }
+}
