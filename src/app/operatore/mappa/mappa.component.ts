@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import * as maplibregl from 'maplibre-gl';
 import { AuthService } from '../../../auth/auth.service';
 import { CommonModule } from '@angular/common';
@@ -10,7 +16,7 @@ import { PerizieService } from '../../../shared/perizie.service';
   standalone: true,
   imports: [CommonModule, FormsModule], // ✅ aggiunto FormsModule
   templateUrl: './mappa.component.html',
-  styleUrls: ['./mappa.component.css']
+  styleUrls: ['./mappa.component.css'],
 })
 export class MappaComponent implements OnInit, AfterViewInit {
   @ViewChild('mapContainer', { static: false }) mapContainerRef!: ElementRef;
@@ -22,7 +28,10 @@ export class MappaComponent implements OnInit, AfterViewInit {
   immagineIngrandita: string | null = null;
   userImage: string = '/assets/default-profile.jpg';
 
-  constructor(private authService: AuthService, private perizieService: PerizieService) {}
+  constructor(
+    private authService: AuthService,
+    private perizieService: PerizieService
+  ) {}
 
   ngOnInit(): void {
     const user = this.authService.getUser();
@@ -37,7 +46,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.error('Errore caricamento perizie', err);
-      }
+      },
     });
   }
 
@@ -58,17 +67,19 @@ export class MappaComponent implements OnInit, AfterViewInit {
           osm: {
             type: 'raster',
             tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
-            tileSize: 256
-          }
+            tileSize: 256,
+          },
         },
-        layers: [{
-          id: 'osm',
-          type: 'raster',
-          source: 'osm'
-        }]
+        layers: [
+          {
+            id: 'osm',
+            type: 'raster',
+            source: 'osm',
+          },
+        ],
       },
       center: defaultCenter,
-      zoom: 5
+      zoom: 5,
     });
 
     this.map.addControl(new maplibregl.NavigationControl());
@@ -80,9 +91,12 @@ export class MappaComponent implements OnInit, AfterViewInit {
   }
 
   filtraPerizie(stato: string): void {
-    this.perizieFiltrate = (stato === 'tutte')
-      ? [...this.perizieTotali]
-      : this.perizieTotali.filter(p => p.stato?.toLowerCase() === stato.toLowerCase());
+    this.perizieFiltrate =
+      stato === 'tutte'
+        ? [...this.perizieTotali]
+        : this.perizieTotali.filter(
+            (p) => p.stato?.toLowerCase() === stato.toLowerCase()
+          );
     this.renderMarkers();
   }
 
@@ -101,7 +115,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
         center: [lon, lat],
         zoom: 16,
         speed: 1.2,
-        curve: 1
+        curve: 1,
       });
     }
 
@@ -113,7 +127,9 @@ export class MappaComponent implements OnInit, AfterViewInit {
 
   renderMarkers(): void {
     if (!this.map) return;
-    document.querySelectorAll('.maplibregl-marker').forEach(el => el.remove());
+    document
+      .querySelectorAll('.maplibregl-marker')
+      .forEach((el) => el.remove());
 
     const bounds = new maplibregl.LngLatBounds();
     let markerCount = 0;
@@ -150,7 +166,9 @@ export class MappaComponent implements OnInit, AfterViewInit {
       `;
 
       const img = document.createElement('img');
-      img.src = this.userImage || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      img.src =
+        this.userImage ||
+        'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       img.alt = 'Foto';
       img.style.cssText = `
         width: 100%;
@@ -172,7 +190,10 @@ export class MappaComponent implements OnInit, AfterViewInit {
           border-radius: 8px;
           font-family: 'Segoe UI', sans-serif;
           font-size: 14px;
-          max-width: 250px;">
+          max-width: 250px;
+          margin:0;
+        transform: translate(0%, -275%);
+          ">
           <p><strong>ID:</strong> ${codicePerizia}</p>
           <p><strong>Data:</strong> ${new Date(dataOra).toLocaleString()}</p>
           <p><strong>Descrizione:</strong> ${descrizione}</p>
@@ -192,7 +213,10 @@ export class MappaComponent implements OnInit, AfterViewInit {
 
       const popup = new maplibregl.Popup({ offset: 25 }).setHTML(popupContent);
 
-      const marker = new maplibregl.Marker({ element: markerEl, anchor: 'bottom' })
+      const marker = new maplibregl.Marker({
+        element: markerEl,
+        anchor: 'bottom',
+      })
         .setLngLat(lngLat)
         .setPopup(popup)
         .addTo(this.map);
@@ -202,7 +226,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
           center: lngLat,
           zoom: 16,
           speed: 1.2,
-          curve: 1
+          curve: 1,
         });
         setTimeout(() => {
           popup.addTo(this.map);
@@ -233,7 +257,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
           top: style.top,
           left: style.left,
           width: style.width,
-          height: style.height
+          height: style.height,
         });
       });
     });
@@ -246,7 +270,7 @@ export class MappaComponent implements OnInit, AfterViewInit {
   }
 
   chiudiPopupAperti(): void {
-    this.popupAperti.forEach(p => p.remove());
+    this.popupAperti.forEach((p) => p.remove());
     this.popupAperti = [];
   }
 

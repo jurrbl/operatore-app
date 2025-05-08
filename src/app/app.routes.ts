@@ -32,7 +32,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
     children: [
-     
       {
         path: 'dashboard',
         loadComponent: () =>

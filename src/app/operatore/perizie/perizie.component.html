@@ -1,53 +1,134 @@
 <!-- ALERT -->
-<div *ngIf="messaggioAlert" [ngClass]="{'bg-green-600': alertSuccesso, 'bg-red-600': !alertSuccesso}" class="text-white px-4 py-2 rounded mb-4 text-sm font-semibold">
-	{{ messaggioAlert }}
+<div
+  *ngIf="messaggioAlert"
+  [ngClass]="{ 'bg-green-600': alertSuccesso, 'bg-red-600': !alertSuccesso }"
+  class="text-white px-4 py-2 rounded mb-4 text-sm font-semibold"
+>
+  {{ messaggioAlert }}
 </div>
 
 <!-- FILTRI -->
-<div class="mt-12 sm:mt-0 flex flex-col sm:flex-row justify-between items-center gap-4 mb-4" id="wrapper-perizie">
-	<input type="text" class="bg-zinc-900 text-white border border-zinc-700 px-3 py-2 rounded w-full sm:w-1/2" placeholder="Cerca per codice o descrizione..." (input)="onSearchChange($event)"/>
-	<select class="bg-zinc-900 text-white border border-zinc-700 px-3 py-2 rounded w-full sm:w-1/3" (change)="onStatusChange($event)">
-		<option value="">Tutti gli stati</option>
-		<option value="completata">Completata</option>
-		<option value="in_corso">In corso</option>
-		<option value="annullata">Annullata</option>
-	</select>
+<div
+  class="mt-12 sm:mt-0 flex flex-col sm:flex-row justify-between items-center gap-4 mb-4"
+  id="wrapper-perizie"
+>
+  <input
+    type="text"
+    class="bg-zinc-900 text-white border border-zinc-700 px-3 py-2 rounded w-full sm:w-1/2"
+    placeholder="Cerca per codice o descrizione..."
+    (input)="onSearchChange($event)"
+  />
+  <select
+    class="bg-zinc-900 text-white border border-zinc-700 px-3 py-2 rounded w-full sm:w-1/3"
+    (change)="onStatusChange($event)"
+  >
+    <option value="">Tutti gli stati</option>
+    <option value="completata">Completata</option>
+    <option value="in_corso">In corso</option>
+    <option value="annullata">Annullata</option>
+  </select>
 </div>
 
 <!-- FORM AGGIUNTA -->
-<form class="mb-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 bg-zinc-800 p-4 rounded border border-zinc-700" (ngSubmit)="aggiungiPerizia()" #periziaForm="ngForm">
-	<div class="flex items-center gap-2 col-span-full">
-		<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-		</svg>
-		<h3 class="font-semibold text-white">Aggiungi Perizia</h3>
-	</div>
+<form
+  class="mb-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 bg-zinc-800 p-4 rounded border border-zinc-700"
+  (ngSubmit)="aggiungiPerizia()"
+  #periziaForm="ngForm"
+>
+  <div class="flex items-center gap-2 col-span-full">
+    <svg
+      class="w-5 h-5 text-blue-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 4v16m8-8H4"
+      />
+    </svg>
+    <h3 class="font-semibold text-white">Aggiungi Perizia</h3>
+  </div>
 
-	<input type="datetime-local" required="required" [(ngModel)]="nuovaPerizia.dataOra" name="data" class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"/>
-	<input type="text" placeholder="Indirizzo" required="required" [(ngModel)]="nuovaPerizia.indirizzo" name="indirizzo" class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"/>
-	<input type="text" placeholder="Descrizione" required="required" [(ngModel)]="nuovaPerizia.descrizione" name="descrizione" class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"/>
+  <input
+    type="datetime-local"
+    required="required"
+    [(ngModel)]="nuovaPerizia.dataOra"
+    name="data"
+    class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"
+  />
+  <input
+    type="text"
+    placeholder="Indirizzo"
+    required="required"
+    [(ngModel)]="nuovaPerizia.indirizzo"
+    name="indirizzo"
+    class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"
+  />
+  <input
+    type="text"
+    placeholder="Descrizione"
+    required="required"
+    [(ngModel)]="nuovaPerizia.descrizione"
+    name="descrizione"
+    class="p-2 rounded bg-zinc-900 text-white border border-zinc-700"
+  />
 
-	<div class="col-span-full">
-		<label class="block text-sm font-medium text-white mb-1" for="foto">Foto</label>
-		<input type="file" accept="image/*" capture="environment" multiple="multiple" id="foto" (change)="onFileSelect($event)" class="p-2 rounded bg-zinc-900 text-white border border-zinc-700 w-full"/>
-		<div *ngFor="let img of immaginiSelezionate; let i = index" class="mt-2 flex flex-col sm:flex-row gap-2 items-center">
-			<span class="text-white text-sm truncate max-w-[150px]">{{ img.file.name }}</span>
-			<input type="text" class="flex-1 px-2 py-1 rounded bg-zinc-900 text-white border border-zinc-700" placeholder="Commento per questa foto" [(ngModel)]="immaginiSelezionate[i].commento" name="commento_{{ i }}"></div>
-			<p class="text-xs text-zinc-400 mt-1">Puoi scattare foto o selezionarle dalla galleria</p>
-		</div>
+  <div class="col-span-full">
+    <label class="block text-sm font-medium text-white mb-1" for="foto"
+      >Foto</label
+    >
+    <input
+      type="file"
+      accept="image/*"
+      capture="environment"
+      multiple="multiple"
+      id="foto"
+      (change)="onFileSelect($event)"
+      class="p-2 rounded bg-zinc-900 text-white border border-zinc-700 w-full"
+    />
+    <div
+      *ngFor="let img of immaginiSelezionate; let i = index"
+      class="mt-2 flex flex-col sm:flex-row gap-2 items-center"
+    >
+      <span class="text-white text-sm truncate max-w-[150px]">{{
+        img.file.name
+      }}</span>
+      <input
+        type="text"
+        class="flex-1 px-2 py-1 rounded bg-zinc-900 text-white border border-zinc-700"
+        placeholder="Commento per questa foto"
+        [(ngModel)]="immaginiSelezionate[i].commento"
+        name="commento_{{ i }}"
+      />
+    </div>
+    <p class="text-xs text-zinc-400 mt-1">
+      Puoi scattare foto o selezionarle dalla galleria
+    </p>
+  </div>
 
-		<button type="submit" class="col-span-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2">
-			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-			</svg>
-			Aggiungi perizia
-		</button>
-	</form>
+  <button
+    type="submit"
+    class="col-span-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 4v16m8-8H4"
+      />
+    </svg>
+    Aggiungi perizia
+  </button>
+</form>
 
-	<!-- TABELLA -->
+<!-- TABELLA -->
 <!-- TABELLA SCORRIBILE ORIZZONTALMENTE -->
 <div class="overflow-x-auto border border-zinc-700 rounded-md w-full">
-  <table class="table-fixed min-w-max divide-y divide-zinc-700 text-sm whitespace-nowrap">
+  <table class="min-w-full divide-y divide-zinc-700 text-sm table-fixed">
     <thead class="bg-zinc-800 text-zinc-300">
       <tr>
         <th class="px-2 py-2 text-left w-28">Codice</th>
@@ -62,13 +143,18 @@
     <tbody>
       <ng-container *ngFor="let perizia of paginated()">
         <tr class="bg-zinc-900 hover:bg-zinc-800 transition-colors">
-          <td class="px-2 py-2 text-white">{{ perizia.codicePerizia || 'N.D.' }}</td>
+          <td class="px-2 py-2 text-white">
+            {{ perizia.codicePerizia || "N.D." }}
+          </td>
           <td class="px-2 py-2 text-zinc-300">
             {{ authService.getUser()?.username || perizia.codiceOperatore }}
           </td>
-          <td class="px-2 py-2 text-zinc-300">{{ perizia.dataOra | date:'short' }}</td>
           <td class="px-2 py-2 text-zinc-300">
-            {{ perizia.coordinate.latitudine }}, {{ perizia.coordinate.longitudine }}
+            {{ perizia.dataOra | date : "short" }}
+          </td>
+          <td class="px-2 py-2 text-zinc-300">
+            {{ perizia.coordinate.latitudine }},
+            {{ perizia.coordinate.longitudine }}
           </td>
           <td class="px-2 py-2 text-zinc-300">{{ perizia.descrizione }}</td>
           <td class="px-2 py-2">
@@ -84,87 +170,226 @@
             </span>
           </td>
           <td class="px-2 py-2 flex gap-2">
-            <!-- bottoni azioni -->
+            <button
+              class="text-white hover:text-blue-400"
+              (click)="mostraDettagli(perizia)"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"
+                />
+              </svg>
+            </button>
+            <button
+              class="text-white hover:text-green-400"
+              (click)="avviaModifica(perizia)"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536M16 4a2 2 0 012.828 2.828l-10 10H6v-2.828l10-10z"
+                />
+              </svg>
+            </button>
+            <button
+              *ngIf="perizia.stato === 'in_corso'"
+              class="text-white hover:text-red-500"
+              (click)="eliminaPerizia(perizia._id)"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </td>
         </tr>
 
         <!-- FORM MODIFICA -->
-        <tr *ngIf="periziaModifica && periziaModifica._id === perizia._id" class="bg-zinc-800">
+        <tr
+          *ngIf="periziaModifica && periziaModifica._id === perizia._id"
+          class="bg-zinc-800"
+        >
           <td colspan="7" class="px-4 py-4">
-            <!-- form di modifica -->
+            <form
+              (ngSubmit)="salvaModifica()"
+              class="flex flex-col sm:flex-row gap-2 items-start sm:items-center"
+            >
+              <input
+                type="text"
+                [(ngModel)]="periziaModifica.descrizione"
+                name="descrizione"
+                class="px-2 py-1 bg-zinc-900 text-white border border-zinc-700 rounded w-full sm:w-1/3"
+                placeholder="Nuova descrizione"
+              />
+              <input
+                type="text"
+                [(ngModel)]="periziaModifica.indirizzo"
+                name="indirizzo"
+                class="px-2 py-1 bg-zinc-900 text-white border border-zinc-700 rounded w-full sm:w-1/3"
+                placeholder="Nuovo indirizzo"
+              />
+              <button
+                type="submit"
+                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
+              >
+                Salva
+              </button>
+              <button
+                type="button"
+                (click)="annullaModifica()"
+                class="bg-zinc-600 hover:bg-zinc-500 text-white px-3 py-1 rounded"
+              >
+                Annulla
+              </button>
+            </form>
           </td>
         </tr>
       </ng-container>
 
       <tr *ngIf="paginated().length === 0">
-        <td colspan="7" class="text-center py-4 text-zinc-500">Nessuna perizia trovata.</td>
+        <td colspan="7" class="text-center py-4 text-zinc-500">
+          Nessuna perizia trovata.
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-	<!-- DETTAGLI -->
-	<div *ngIf="selectedPerizia" class="mt-4 bg-zinc-800 text-white rounded p-4 border border-zinc-700">
-		<div class="flex justify-between items-center mb-2">
-			<h4 class="text-lg font-semibold">Dettagli Perizia
-				{{ selectedPerizia.codicePerizia }}</h4>
-			<button (click)="chiudiDettagli()" class="text-red-400 hover:text-red-500 text-xl">✕</button>
-		</div>
+<!-- DETTAGLI -->
+<div
+  *ngIf="selectedPerizia"
+  class="mt-4 bg-zinc-800 text-white rounded p-4 border border-zinc-700"
+>
+  <div class="flex justify-between items-center mb-2">
+    <h4 class="text-lg font-semibold">
+      Dettagli Perizia {{ selectedPerizia.codicePerizia }}
+    </h4>
+    <button
+      (click)="chiudiDettagli()"
+      class="text-red-400 hover:text-red-500 text-xl"
+    >
+      ✕
+    </button>
+  </div>
 
-		<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-			<p>
-				<strong>Descrizione:</strong>
-				{{ selectedPerizia.descrizione }}</p>
-			<p>
-				<strong>Coordinate:</strong>
-				{{ selectedPerizia.coordinate?.latitudine }},
-				{{ selectedPerizia.coordinate?.longitudine }}</p>
-			<p>
-				<strong>Data/Ora:</strong>
-				{{ selectedPerizia.dataOra | date: 'short' }}</p>
-			<p>
-				<strong>Stato:</strong>
-				{{ selectedPerizia.stato }}</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <p>
+      <strong>Descrizione:</strong>
+      {{ selectedPerizia.descrizione }}
+    </p>
+    <p>
+      <strong>Coordinate:</strong>
+      {{ selectedPerizia.coordinate?.latitudine }},
+      {{ selectedPerizia.coordinate?.longitudine }}
+    </p>
+    <p>
+      <strong>Data/Ora:</strong>
+      {{ selectedPerizia.dataOra | date : "short" }}
+    </p>
+    <p>
+      <strong>Stato:</strong>
+      {{ selectedPerizia.stato }}
+    </p>
 
-			<!-- 🧠 Mostra Nome Admin Revisore -->
-			<div *ngIf="selectedPerizia.revisioneAdmin?.username">
-				<p class="font-semibold mb-2">
-					<strong>Revisionata da:</strong>
-					{{ selectedPerizia.revisioneAdmin.username }}</p>
-				<p class="font-semibold mb-2">
-					<strong>Commento Admin:</strong>
-				</p>
-				<p class="font-semibold mb-2 rounded">{{ selectedPerizia.revisioneAdmin.commento }}</p>
-			</div>
+    <!-- 🧠 Mostra Nome Admin Revisore -->
+    <div *ngIf="selectedPerizia.revisioneAdmin?.username">
+      <p class="font-semibold mb-2">
+        <strong>Revisionata da:</strong>
+        {{ selectedPerizia.revisioneAdmin.username }}
+      </p>
+      <p class="font-semibold mb-2">
+        <strong>Commento Admin:</strong>
+      </p>
+      <p class="font-semibold mb-2 rounded">
+        {{ selectedPerizia.revisioneAdmin.commento }}
+      </p>
+    </div>
+  </div>
 
-		</div>
+  <div class="mt-4">
+    <h5 class="font-semibold mb-2">Fotografie:</h5>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div
+        *ngFor="let foto of selectedPerizia.fotografie"
+        class="flex flex-col items-center"
+      >
+        <img
+          [src]="foto.url"
+          class="rounded shadow-md object-cover max-h-48 w-full cursor-pointer"
+          (click)="apriLightbox(foto.url)"
+          alt="Foto perizia"
+        />
+        <p class="text-xs text-zinc-400 mt-1 text-center px-1 break-words">
+          {{ foto.commento }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-		<div class="mt-4">
-			<h5 class="font-semibold mb-2">Fotografie:</h5>
-			<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-				<div *ngFor="let foto of selectedPerizia.fotografie" class="flex flex-col items-center">
-					<img [src]="foto.url" class="rounded shadow-md object-cover max-h-48 w-full cursor-pointer" (click)="apriLightbox(foto.url)" alt="Foto perizia"/>
-					<p class="text-xs text-zinc-400 mt-1 text-center px-1 break-words">{{ foto.commento }}</p>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- PAGINAZIONE -->
+<div class="mt-4 flex justify-center gap-4 text-white items-center">
+  <button
+    (click)="prevPage()"
+    [disabled]="currentPage() === 1"
+    class="px-3 py-1 rounded bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50"
+  >
+    «
+  </button>
+  <span
+    >Pagina
+    {{ currentPage() }}
+    di
+    {{ totalPages() }}</span
+  >
+  <button
+    (click)="nextPage()"
+    [disabled]="currentPage() === totalPages()"
+    class="px-3 py-1 rounded bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50"
+  >
+    »
+  </button>
+</div>
 
-
-	<!-- PAGINAZIONE -->
-	<div class="mt-4 flex justify-center gap-4 text-white items-center">
-		<button (click)="prevPage()" [disabled]="currentPage() === 1" class="px-3 py-1 rounded bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50">«</button>
-		<span>Pagina
-			{{ currentPage() }}
-			di
-			{{ totalPages() }}</span>
-		<button (click)="nextPage()" [disabled]="currentPage() === totalPages()" class="px-3 py-1 rounded bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50">»</button>
-	</div>
-
-	<!-- LIGHTBOX -->
-	<div *ngIf="lightboxUrl" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-		<div class="relative max-w-full max-h-full">
-			<button class="absolute top-2 right-2 text-white text-2xl" (click)="chiudiLightbox()">✕</button>
-			<img [src]="lightboxUrl" class="max-w-full max-h-screen rounded shadow-xl"/>
-		</div>
-	</div>
+<!-- LIGHTBOX -->
+<div
+  *ngIf="lightboxUrl"
+  class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+>
+  <div class="relative max-w-full max-h-full">
+    <button
+      class="absolute top-2 right-2 text-white text-2xl"
+      (click)="chiudiLightbox()"
+    >
+      ✕
+    </button>
+    <img
+      [src]="lightboxUrl"
+      class="max-w-full max-h-screen rounded shadow-xl"
+    />
+  </div>
+</div>
